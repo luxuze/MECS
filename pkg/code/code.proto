@@ -1,0 +1,15 @@
+syntax = "proto3";
+
+package code;
+
+service Mesc {
+  rpc Register (Code) returns (Response){}
+}
+
+message Code {
+  string code = 1;
+}
+
+message Response {
+  string result = 1;
+}
