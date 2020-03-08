@@ -5,9 +5,9 @@ import (
 	"log"
 	"net"
 
-	pb "mecs/pkg/code"
-
 	"google.golang.org/grpc"
+	"mecs/mqtt"
+	pb "mecs/pkg/code"
 )
 
 const (
@@ -23,6 +23,10 @@ func (s *server) Register(ctx context.Context, in *pb.Code) (*pb.Response, error
 	return &pb.Response{Result: "Registed success: " + in.GetCode()}, nil
 }
 
+func devRegist () {
+	log.Println("dev regist: ")
+}
+
 func main() {
 	lis, err := net.Listen("tcp", port)
 	if err != nil {
@@ -30,6 +34,7 @@ func main() {
 	}
 	s := grpc.NewServer()
 	pb.RegisterMescServer(s, &server{})
+	go mqtt.Subscribe("test", devRegist)
 	if err := s.Serve(lis); err != nil {
 		log.Fatalf("failed to serve: %v", err)
 	}
