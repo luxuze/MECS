@@ -8,7 +8,7 @@ import (
 func TestSubscribe(t *testing.T) {
 	type args struct {
 		topic    string
-		callback func()
+		callback func(string)
 	}
 	tests := []struct {
 		name string
@@ -17,8 +17,8 @@ func TestSubscribe(t *testing.T) {
 		{
 			name:"TestSubscribe",
 			args:args{
-				topic:"test",callback: func() {
-					fmt.Println("this is callback function")
+				topic:"test",callback: func(msg string) {
+					fmt.Println("this is callback function", msg)
 				},
 			},
 		},

@@ -1,13 +1,11 @@
-package main
+package command
 
 import (
 	"context"
-	"log"
-	"net"
-
 	"google.golang.org/grpc"
-	"mecs/mqtt"
+	"log"
 	pb "mecs/pkg/code"
+	"net"
 )
 
 const (
@@ -23,18 +21,15 @@ func (s *server) Register(ctx context.Context, in *pb.Code) (*pb.Response, error
 	return &pb.Response{Result: "Registed success: " + in.GetCode()}, nil
 }
 
-func devRegist () {
-	log.Println("dev regist: ")
-}
-
-func main() {
+func WaitingUserCommand() {
 	lis, err := net.Listen("tcp", port)
 	if err != nil {
 		log.Fatalf("failed to listen: %v", err)
+	} else {
+		log.Printf("用户指令处理下发服务启动成功，监听端口%v", port)
 	}
 	s := grpc.NewServer()
 	pb.RegisterMescServer(s, &server{})
-	go mqtt.Subscribe("test", devRegist)
 	if err := s.Serve(lis); err != nil {
 		log.Fatalf("failed to serve: %v", err)
 	}

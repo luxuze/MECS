@@ -30,12 +30,12 @@ func createClientOptions(uri string) *mq.ClientOptions {
 	return opts
 }
 
-func Subscribe(topic string, callback func()) {
-	log.Printf("Mqtt Subscribe: %v", topic)
+func Subscribe(topic string, callback func(string)) {
+	log.Printf("Mqtt Subscribe: [%v]", topic)
 	client := connect(config.MqttUrl)
 	client.Subscribe(topic, 0, func(client mq.Client, msg mq.Message) {
 		log.Printf("Mqtt Received: [%s] %s\n", msg.Topic(), string(msg.Payload()))
-		callback()
+		callback(string(msg.Payload()))
 	})
 }
 
