@@ -1,0 +1,27 @@
+Constract_A
+
+init SA, P;
+init i = 1;
+for j in range(i, max(SA)):
+    do while SA[i] = P[j]:
+        E[j] = P[j];
+    end do
+    A[i].a = e[i] - SA[j-1] + 1;
+    A[i].b = e[i] - S[i] + 1;
+    j ++;
+next
+return A
+
+ASMQuery
+
+init SA;
+init A;
+range[T, P] = query(SA)
+init C = 0;
+Ai := index(A);
+j := RMQ(Ai, S, E);
+if Ai[SA[j]] >= m; then
+    C = C U SA[j]
+    left Recursive(Ai, SA, j--, m);
+    right Recursive(Ai, SA, j++, m);
+fi
